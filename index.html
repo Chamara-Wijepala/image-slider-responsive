@@ -5,11 +5,19 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 		<title>Responsive Image Slider</title>
 		<link rel="stylesheet" href="style.css" />
+		<link
+			rel="stylesheet"
+			href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"
+		/>
 		<script src="script.js" defer></script>
 	</head>
 	<body>
 		<div class="container">
 			<div class="slider-wrapper">
+				<button id="prev-slide" class="slide-btn material-symbols-rounded">
+					chevron_left
+				</button>
+
 				<div class="image-list">
 					<img src="images/img-1.jpg" alt="" />
 					<img src="images/img-2.jpg" alt="" />
@@ -22,6 +30,10 @@
 					<img src="images/img-9.jpg" alt="" />
 					<img src="images/img-10.jpg" alt="" />
 				</div>
+
+				<button id="next-slide" class="slide-btn material-symbols-rounded">
+					chevron_right
+				</button>
 			</div>
 		</div>
 	</body>

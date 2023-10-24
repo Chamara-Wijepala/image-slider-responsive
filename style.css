@@ -17,6 +17,35 @@ body {
 	width: 95%;
 }
 
+.slider-wrapper {
+	position: relative;
+}
+
+.slide-btn {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+	width: 50px;
+	height: 50px;
+	color: white;
+	background: black;
+	font-size: 2.2rem;
+	cursor: pointer;
+	outline: none;
+	border: none;
+	border-radius: 50%;
+}
+.slide-btn:hover {
+	background: #444;
+}
+
+#prev-slide {
+	left: -20px;
+}
+#next-slide {
+	right: -20px;
+}
+
 .image-list {
 	display: grid;
 	gap: 18px;
