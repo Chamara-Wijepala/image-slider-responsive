@@ -53,10 +53,56 @@ body {
 	grid-template-columns: repeat(10, 1fr);
 	font-size: 0;
 	overflow-x: auto;
+	scrollbar-width: none;
+	margin-bottom: 30px;
+}
+.image-list::-webkit-scrollbar {
+	display: none;
 }
 
 img {
 	width: 325px;
 	height: 400px;
 	object-fit: cover;
+}
+
+.scrollbar {
+	height: 24px;
+	width: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.scrollbar-track {
+	position: relative;
+	height: 2px;
+	width: 100%;
+	background: #ccc;
+	border-radius: 4px;
+	display: flex;
+	align-items: center;
+}
+.scrollbar:hover .scrollbar-track {
+	height: 4px;
+}
+
+.scrollbar-thumb {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	height: 100%;
+	width: 50%;
+	background: black;
+	border-radius: inherit;
+	cursor: grab;
+}
+.scrollbar-thumb::after {
+	content: '';
+	position: absolute;
+	inset: -10px 0px -10px 0px;
+}
+.scrollbar-thumb::active {
+	cursor: grabbing;
+	height: 8px;
+	top: -2px;
 }
