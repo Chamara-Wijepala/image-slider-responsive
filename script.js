@@ -1,5 +1,7 @@
 function initSlider() {
 	const slideButtons = document.querySelectorAll('.slide-btn');
+	const scrollbar = document.querySelector('.scrollbar');
+	const scrollbarThumb = document.querySelector('.scrollbar-thumb');
 	const imageList = document.querySelector('.image-list');
 
 	// scrollWidth returns max width of an element, including content hidden due
@@ -16,6 +18,16 @@ function initSlider() {
 			imageList.scrollLeft >= maxScrollLeft ? 'none' : 'block';
 	}
 
+	// update scrollbar thumb position based on image scroll
+	function updateScrollThumbPosition() {
+		const scrollPosition = imageList.scrollLeft;
+		// offsetWidth returns the width of an element including the border
+		const thumbPosition =
+			(scrollPosition / maxScrollLeft) *
+			(scrollbar.clientWidth - scrollbarThumb.offsetWidth);
+		scrollbarThumb.style.left = `${thumbPosition}px`;
+	}
+
 	slideButtons.forEach((button) => {
 		button.addEventListener('click', () => {
 			const direction = button.id === 'prev-slide' ? -1 : 1;
@@ -28,6 +40,44 @@ function initSlider() {
 
 	imageList.addEventListener('scroll', () => {
 		handleSlideButtons();
+		updateScrollThumbPosition();
+	});
+
+	// handle scrollbar thumb drag
+	scrollbarThumb.addEventListener('mousedown', (e) => {
+		// clientX returns horizontal coordinate in the viewport where the event
+		// occurred
+		const startX = e.clientX;
+		const thumbPosition = scrollbarThumb.offsetLeft;
+
+		// update thumb position on mouse move
+		function handleMouseMove(e) {
+			const deltaX = e.clientX - startX;
+			const newThumbPosition = thumbPosition + deltaX;
+			// getBoundingClientRect().width returns the elements width including
+			// padding and border width
+			const maxThumbPosition =
+				scrollbar.getBoundingClientRect().width - scrollbarThumb.offsetWidth;
+
+			const boundedPosition = Math.max(
+				0,
+				Math.min(maxThumbPosition, newThumbPosition)
+			);
+			const scrollPosition =
+				(boundedPosition / maxThumbPosition) * maxScrollLeft;
+
+			scrollbarThumb.style.left = `${boundedPosition}px`;
+			imageList.scrollLeft = scrollPosition;
+		}
+
+		// prevent thumb from sliding after mouseup
+		function handleMouseUp() {
+			document.removeEventListener('mousemove', handleMouseMove);
+			document.removeEventListener('mouseup', handleMouseUp);
+		}
+
+		document.addEventListener('mousemove', handleMouseMove);
+		document.addEventListener('mouseup', handleMouseUp);
 	});
 }
 
